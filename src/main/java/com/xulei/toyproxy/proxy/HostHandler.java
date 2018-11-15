@@ -94,5 +94,6 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 				+ dataBuff.readableBytes());
 		ctx.channel().pipeline().addLast(new ClientProxyHandler(host, port, ctx, dataBuff, _crypt));
 		ctx.channel().pipeline().remove(this);
+
 	}
 }

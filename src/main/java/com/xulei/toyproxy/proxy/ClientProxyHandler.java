@@ -30,6 +30,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class ClientProxyHandler extends ChannelInboundHandlerAdapter {
 
 	private static Logger logger = LoggerFactory.getLogger(ClientProxyHandler.class);
+    private Logger ipLog = LoggerFactory.getLogger("iplog");
 	private ICrypt _crypt;
 	private AtomicReference<Channel> remoteChannel = new AtomicReference<>();
 	private ByteBuf clientCache;
@@ -71,6 +72,7 @@ public class ClientProxyHandler extends ChannelInboundHandlerAdapter {
 					if (future.isSuccess()) {
 						logger.debug(
 								"connect success host = " + host + ",port = " + port + ",inetAddress = " + inetAddress);
+						ipLog.info("connect ip:"+clientProxyChannel.channel().remoteAddress().toString()+"connect success inetAddress = " + inetAddress);
 						remoteChannel.set(future.channel());
 					} else {
 						logger.debug(
