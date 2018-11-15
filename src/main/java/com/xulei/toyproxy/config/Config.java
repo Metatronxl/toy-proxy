@@ -1,4 +1,4 @@
-package org.netty.config;
+package com.xulei.toyproxy.config;
 
 /**
  * 配置

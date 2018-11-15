@@ -1,11 +1,11 @@
-package org.netty.proxy;
+package com.xulei.toyproxy.proxy;
 
 import java.net.InetAddress;
 
-import org.netty.config.Config;
-import org.netty.encryption.CryptFactory;
-import org.netty.encryption.CryptUtil;
-import org.netty.encryption.ICrypt;
+import com.xulei.toyproxy.config.Config;
+import com.xulei.toyproxy.encryption.CryptFactory;
+import com.xulei.toyproxy.encryption.CryptUtil;
+import com.xulei.toyproxy.encryption.ICrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

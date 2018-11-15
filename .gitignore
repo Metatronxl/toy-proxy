@@ -16,6 +16,9 @@
 *.iml
 *.ipr
 
+/logs/
+/shell/nohup.out
+
 ### NetBeans ###
 /nbproject/private/
 /build/

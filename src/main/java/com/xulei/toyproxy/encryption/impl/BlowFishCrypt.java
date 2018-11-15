@@ -1,9 +1,9 @@
-package org.netty.encryption.impl;
+package com.xulei.toyproxy.encryption.impl;
 
 import org.bouncycastle.crypto.StreamBlockCipher;
 import org.bouncycastle.crypto.engines.BlowfishEngine;
 import org.bouncycastle.crypto.modes.CFBBlockCipher;
-import org.netty.encryption.CryptBase;
+import com.xulei.toyproxy.encryption.CryptBase;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;

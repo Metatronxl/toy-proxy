@@ -1,13 +1,13 @@
-package org.netty.encryption;
+package com.xulei.toyproxy.encryption;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.netty.encryption.impl.AesCrypt;
-import org.netty.encryption.impl.BlowFishCrypt;
-import org.netty.encryption.impl.CamelliaCrypt;
-import org.netty.encryption.impl.SeedCrypt;
+import com.xulei.toyproxy.encryption.impl.AesCrypt;
+import com.xulei.toyproxy.encryption.impl.BlowFishCrypt;
+import com.xulei.toyproxy.encryption.impl.CamelliaCrypt;
+import com.xulei.toyproxy.encryption.impl.SeedCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

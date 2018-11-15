@@ -1,4 +1,4 @@
-package org.netty.config;
+package com.xulei.toyproxy.config;
 
 import java.io.FileInputStream;
 import java.io.IOException;

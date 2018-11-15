@@ -1,4 +1,4 @@
-package org.netty.encryption;
+package com.xulei.toyproxy.encryption;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

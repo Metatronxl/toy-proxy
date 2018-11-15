@@ -1,4 +1,4 @@
-package org.netty.encryption.impl;
+package com.xulei.toyproxy.encryption.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.security.InvalidAlgorithmParameterException;
@@ -12,7 +12,7 @@ import org.bouncycastle.crypto.StreamBlockCipher;
 import org.bouncycastle.crypto.engines.AESFastEngine;
 import org.bouncycastle.crypto.modes.CFBBlockCipher;
 import org.bouncycastle.crypto.modes.OFBBlockCipher;
-import org.netty.encryption.CryptBase;
+import com.xulei.toyproxy.encryption.CryptBase;
 
 /**
  * AES 实现类

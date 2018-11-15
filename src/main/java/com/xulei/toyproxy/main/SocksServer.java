@@ -1,8 +1,10 @@
-package org.netty;
+package com.xulei.toyproxy.main;
 
-import org.netty.config.Config;
-import org.netty.config.ConfigXmlLoader;
-import org.netty.proxy.HostHandler;
+
+import com.xulei.toyproxy.config.Config;
+import com.xulei.toyproxy.config.ConfigXmlLoader;
+import com.xulei.toyproxy.proxy.HostHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,10 +15,14 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.springframework.stereotype.Component;
 
+
+@Component
+@Slf4j
 public class SocksServer {
 
-	private static Logger logger = LoggerFactory.getLogger(SocksServer.class);
+//	private static Logger logger = LoggerFactory.getLogger(SocksServer.class);
 
 	private static final String CONFIG = "conf/config.xml";
 
@@ -48,10 +54,10 @@ public class SocksServer {
 						}
 					});
 
-			logger.info("Start At Port " + config.get_localPort());
+			log.info("Start At Port " + config.get_localPort());
 			bootstrap.bind(config.get_localPort()).sync().channel().closeFuture().sync();
 		} catch (Exception e) {
-			logger.error("start error", e);
+			log.error("start error", e);
 		} finally {
 			stop();
 		}
@@ -64,7 +70,7 @@ public class SocksServer {
 		if (workerGroup != null) {
 			workerGroup.shutdownGracefully();
 		}
-		logger.info("Stop Server!");
+		log.info("Stop Server!");
 	}
 
 }
