@@ -67,7 +67,6 @@ function killServer(){
 }
 
 
-cd ..
 hasCodeUpdate
 updateStatus=$?
 if [ ! ${updateStatus} -eq 0 ] ;then

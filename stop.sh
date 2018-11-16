@@ -67,6 +67,5 @@ function killServer(){
 }
 
 
-cd ..
 killServer
 tail -f nohup.out

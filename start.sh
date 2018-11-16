@@ -67,7 +67,6 @@ function killServer(){
 }
 
 
-cd ..
 killServer
 echo "clean code"
 compile
