@@ -15,8 +15,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * 加载Config配置xml
- * 
- * @author zhaohui
+ *
  * 
  */
 public class ConfigXmlLoader {

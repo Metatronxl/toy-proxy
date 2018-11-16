@@ -4,8 +4,7 @@ import java.io.ByteArrayOutputStream;
 
 /**
  * crypt 加密
- * 
- * @author zhaohui
+ *
  * 
  */
 public interface ICrypt {

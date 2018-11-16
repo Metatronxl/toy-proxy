@@ -2,8 +2,7 @@ package com.xulei.toyproxy.config;
 
 /**
  * 配置
- * 
- * @author zhaohui
+ *
  * 
  */
 public class Config {

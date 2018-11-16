@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import com.xulei.toyproxy.encryption.CryptUtil;
 import com.xulei.toyproxy.encryption.ICrypt;
+import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,22 +67,19 @@ public class ClientProxyHandler extends ChannelInboundHandlerAdapter {
 		try {
 			final InetAddress inetAddress = InetAddress.getByName(host);
 			ChannelFuture channelFuture = bootstrap.connect(inetAddress, port);
-			channelFuture.addListener(new ChannelFutureListener() {
-				@Override
-				public void operationComplete(ChannelFuture future) throws Exception {
-					if (future.isSuccess()) {
-						logger.debug(
-								"connect success host = " + host + ",port = " + port + ",inetAddress = " + inetAddress);
-						ipLog.info("connect ip:"+clientProxyChannel.channel().remoteAddress().toString()+"connect success inetAddress = " + inetAddress);
-						remoteChannel.set(future.channel());
-					} else {
-						logger.debug(
-								"connect fail host = " + host + ",port = " + port + ",inetAddress = " + inetAddress);
-						future.cancel(true);
-						channelClose();
-					}
-				}
-			});
+			channelFuture.addListener((ChannelFutureListener) future -> {
+                if (future.isSuccess()) {
+                    logger.debug(
+                            "connect success host = " + host + ",port = " + port + ",inetAddress = " + inetAddress);
+                    ipLog.info("connect ip:"+clientProxyChannel.channel().remoteAddress().toString()+"connect success inetAddress = " + inetAddress);
+                    remoteChannel.set(future.channel());
+                } else {
+                    logger.debug(
+                            "connect fail host = " + host + ",port = " + port + ",inetAddress = " + inetAddress);
+                    future.cancel(true);
+                    channelClose();
+                }
+            });
 		} catch (Exception e) {
 			logger.error("connect intenet error", e);
 			channelClose();
@@ -100,6 +98,9 @@ public class ClientProxyHandler extends ChannelInboundHandlerAdapter {
 		} else {
 			clientCache.writeBytes(decrypt);
 		}
+
+		//释放内存
+		buff.release();
 	}
 
 	@Override
@@ -123,8 +124,12 @@ public class ClientProxyHandler extends ChannelInboundHandlerAdapter {
 				remoteChannel = null;
 			}
 			clientProxyChannel.close();
-			clientCache.clear();
-			clientCache = null;
+			//释放clientCache的内存
+			if(clientCache != null){
+                clientCache.clear();
+                clientCache = null;
+            }
+
 		} catch (Exception e) {
 			logger.error("close channel error", e);
 		}

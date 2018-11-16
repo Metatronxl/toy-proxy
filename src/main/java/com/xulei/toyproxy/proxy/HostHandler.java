@@ -6,6 +6,7 @@ import com.xulei.toyproxy.config.Config;
 import com.xulei.toyproxy.encryption.CryptFactory;
 import com.xulei.toyproxy.encryption.CryptUtil;
 import com.xulei.toyproxy.encryption.ICrypt;
+import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,8 +20,7 @@ import io.netty.handler.codec.socks.SocksAddressType;
  * 4次握手中的connect阶段，接受shadowsocks-netty发送给shadowsocks-netty-server的消息
  * 
  * 具体数据的读取可以参考类：SocksCmdRequest
- * 
- * @author zhaohui
+ *
  *
  */
 public class HostHandler extends ChannelInboundHandlerAdapter {
@@ -58,9 +58,9 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		if (buff.readableBytes() <= 0) {
 			return;
 		}
-		ByteBuf dataBuff = Unpooled.wrappedBuffer(CryptUtil.decrypt(_crypt, msg));//这样做可以减少一次拷贝操作
-//		ByteBuf dataBuff = Unpooled.buffer();
-//		dataBuff.writeBytes(CryptUtil.decrypt(_crypt, msg)); //解密模块
+//		ByteBuf dataBuff = Unpooled.wrappedBuffer(CryptUtil.decrypt(_crypt, msg));//这样做可以减少一次拷贝操作
+		ByteBuf dataBuff = Unpooled.buffer();
+		dataBuff.writeBytes(CryptUtil.decrypt(_crypt, msg)); //解密模块
 		if (dataBuff.readableBytes() < 2) {
 			return;
 		}
@@ -94,6 +94,9 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 				+ dataBuff.readableBytes());
 		ctx.channel().pipeline().addLast(new ClientProxyHandler(host, port, ctx, dataBuff, _crypt));
 		ctx.channel().pipeline().remove(this);
+
+		//释放资源
+//		ReferenceCountUtil.release(dataBuff);
 
 	}
 }

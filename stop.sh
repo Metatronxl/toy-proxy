@@ -3,7 +3,7 @@
 function compile()
 {
 	echo "rebuild project"
-	mvn clean package
+	mvn clean package -Dmaven.test.skip=true
 }
 
 function hasCodeUpdate()
@@ -35,14 +35,14 @@ function checkServer()
 	fi
 
 	#这句代码有问题,判断不生效
-	if [ ! -f "target/toy-proxy.jar" ] ;then
+	if [ ! -f "target/toy-proxy-0.0.1-SNAPSHOT.jar" ] ;then
 		echo "项目执行文件不存在，重新编译"
 		compile
 	fi
 
 	echo "start server"
 
-    nohup java -jar ./target/toy-proxy.jar &
+    nohup java -jar ./target/toy-proxy-0.0.1-SNAPSHOT.jar &
 
 
     toy_proxy=`ps -ef | grep "toy-proxy" | grep "java" | grep -v "grep"`
