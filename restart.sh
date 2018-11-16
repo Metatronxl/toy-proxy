@@ -80,4 +80,4 @@ if [ ! ${updateStatus} -eq 0 ] ;then
 fi
 checkServer
 
-#tail -f nohup.out
+tail -f nohup.out
