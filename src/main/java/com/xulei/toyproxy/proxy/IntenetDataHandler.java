@@ -64,8 +64,11 @@ public class IntenetDataHandler extends SimpleChannelInboundHandler<ByteBuf> {
 	private void channelClose() {
 		try {
 			clientProxyChannel.close();
-			cacheBuffer.clear();
-			cacheBuffer = null;
+			if (cacheBuffer != null){
+				cacheBuffer.clear();
+				cacheBuffer = null;
+			}
+
 		} catch (Exception e) {
 			logger.error("close channel error", e);
 		}
