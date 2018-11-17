@@ -27,6 +27,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 
 	private static Logger logger = LoggerFactory.getLogger(HostHandler.class);
 	private final static String LOG_PRE = "Enter into [HostHandler]";
+
 	private ICrypt _crypt;
 
 	public HostHandler(Config config) {
@@ -37,6 +38,8 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 	    logger.info(LOG_PRE+"channel is active");
+        logger.debug("监听连接的IPconnect ip:   "+ctx.channel().remoteAddress().toString()+"    connect success" );
+
 	}
 
 	@Override
