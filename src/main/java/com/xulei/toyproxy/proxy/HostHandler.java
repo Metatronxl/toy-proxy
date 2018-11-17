@@ -38,7 +38,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 	    logger.info(LOG_PRE+"channel is active");
-        logger.debug("监听连接的IPconnect ip:   "+ctx.channel().remoteAddress().toString()+"    connect success" );
+        logger.info("监听连接的IPconnect ip:   "+ctx.channel().remoteAddress().toString()+"    connect success" );
 
 	}
 
