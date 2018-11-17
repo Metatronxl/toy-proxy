@@ -87,6 +87,7 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 			dataBuff.readBytes(hostBytes);
 			host = new String(hostBytes);
 			port = dataBuff.readShort();
+            logger.info("connect ip:   "+ctx.channel().remoteAddress().toString()+"    connect success" );
 		}else if (addressType == SocksAddressType.IPv6.byteValue()){
 			if (dataBuff.readableBytes() < 16) {
 				return;
