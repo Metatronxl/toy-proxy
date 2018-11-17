@@ -87,10 +87,22 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 			dataBuff.readBytes(hostBytes);
 			host = new String(hostBytes);
 			port = dataBuff.readShort();
-		} else {
+		}else if (addressType == SocksAddressType.IPv6.byteValue()){
+			if (dataBuff.readableBytes() < 16) {
+				return;
+			}
+            dataBuff.readUnsignedByte();
+            byte[] ipBytes = new byte[16];
+            dataBuff.readBytes(ipBytes);
+            host = InetAddress.getByAddress(ipBytes).toString().substring(1);
+            port = dataBuff.readShort();
+            logger.info("IPV6 Test=== "+"addressType"+ ",host = " + host + ",port = " + port + ",dataBuff = "
+                    + dataBuff.readableBytes());
+		}else {
 			throw new IllegalStateException("unknown address type: " + addressType);
 		}
-		logger.debug("addressType = " + addressType + ",host = " + host + ",port = " + port + ",dataBuff = "
+
+		logger.info("addressType = " + addressType + ",host = " + host + ",port = " + port + ",dataBuff = "
 				+ dataBuff.readableBytes());
 		ctx.channel().pipeline().addLast(new ClientProxyHandler(host, port, ctx, dataBuff, _crypt));
 		ctx.channel().pipeline().remove(this);
