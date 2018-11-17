@@ -63,6 +63,8 @@ public class HostHandler extends ChannelInboundHandlerAdapter {
 		}
 //		ByteBuf dataBuff = Unpooled.wrappedBuffer(CryptUtil.decrypt(_crypt, msg));//这样做可以减少一次拷贝操作
 		ByteBuf dataBuff = Unpooled.buffer();
+        logger.info("ALL dataBuff test  = "
+                + dataBuff.readableBytes());
 		dataBuff.writeBytes(CryptUtil.decrypt(_crypt, msg)); //解密模块
 		if (dataBuff.readableBytes() < 2) {
 			return;
