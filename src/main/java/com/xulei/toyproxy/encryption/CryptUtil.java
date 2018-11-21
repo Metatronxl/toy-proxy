@@ -3,6 +3,7 @@ package com.xulei.toyproxy.encryption;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +42,10 @@ public class CryptUtil {
 	public static byte[] decrypt(ICrypt crypt, Object msg) {
 		byte[] data = null;
 		ByteArrayOutputStream _localOutStream = null;
+		ByteBuf bytebuff = null;
 		try {
 			_localOutStream = new ByteArrayOutputStream();
-			ByteBuf bytebuff = (ByteBuf) msg;
+			bytebuff = (ByteBuf) msg;
 			if (!bytebuff.hasArray()) {
 				int len = bytebuff.readableBytes();
 				byte[] arr = new byte[len];
@@ -53,6 +55,7 @@ public class CryptUtil {
 			}
 		} catch (Exception e) {
 			logger.error("encrypt error", e);
+			ReferenceCountUtil.release(bytebuff); //释放内存
 		} finally {
 			if (_localOutStream != null) {
 				try {
@@ -60,6 +63,7 @@ public class CryptUtil {
 				} catch (IOException e) {
 				}
 			}
+            ReferenceCountUtil.release(bytebuff); //释放内存
 		}
 		return data;
 	}
