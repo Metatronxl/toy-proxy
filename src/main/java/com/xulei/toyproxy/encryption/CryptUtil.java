@@ -55,7 +55,6 @@ public class CryptUtil {
 			}
 		} catch (Exception e) {
 			logger.error("encrypt error", e);
-			ReferenceCountUtil.release(bytebuff); //释放内存
 		} finally {
 			if (_localOutStream != null) {
 				try {
@@ -63,8 +62,10 @@ public class CryptUtil {
 				} catch (IOException e) {
 				}
 			}
-            ReferenceCountUtil.release(bytebuff); //释放内存
 		}
+
+        ReferenceCountUtil.releaseLater(bytebuff); //memory stackoverflow
+
 		return data;
 	}
 
